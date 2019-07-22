@@ -28,7 +28,11 @@ workOrdersRouter.get('/:id', async (request, response, next) => {
       'workers',
       { name: 1, companyName: 1, email: 1 },
     )
-    response.status(200).json(workOrder.toJSON())
+    if (_.isNull(workOrder)) {
+      response.status(404).json({ error: 'invalid work order id' })
+    } else {
+      response.status(200).json(workOrder.toJSON())
+    }
   } catch (exception) {
     next(exception)
   }
