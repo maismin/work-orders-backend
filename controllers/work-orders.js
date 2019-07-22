@@ -1,14 +1,17 @@
 const workOrdersRouter = require('express').Router()
 const Worker = require('../models/worker')
 const WorkOrder = require('../models/work-order')
+const _ = require('lodash')
 
 workOrdersRouter.get('/', async (request, response, next) => {
   try {
     const sortQuery = {}
-    request.query.sort.split(',').forEach(queryStr => {
-      const queryStrSplit = queryStr.split('.')
-      sortQuery[queryStrSplit[0]] = queryStrSplit[1]
-    })
+    if (!_.isEmpty(request.query)) {
+      request.query.sort.split(',').forEach(queryStr => {
+        const queryStrSplit = queryStr.split('.')
+        sortQuery[queryStrSplit[0]] = queryStrSplit[1]
+      })
+    }
 
     const workOrders = await WorkOrder.find({})
       .populate('workers', { name: 1, companyName: 1, email: 1 })
