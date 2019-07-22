@@ -22,7 +22,11 @@ workersRouter.get('/:id', async (request, response, next) => {
       'workOrders',
       { title: 1, description: 1, deadline: 1 },
     )
-    response.status(200).json(worker.toJSON())
+    if (_.isNull(worker)) {
+      response.status(404).json({ error: 'invalid worker id' })
+    } else {
+      response.status(200).json(worker.toJSON())
+    }
   } catch (exception) {
     next(exception)
   }
@@ -34,7 +38,11 @@ workersRouter.get('/:id/work-orders', async (request, response, next) => {
       'workOrders',
       { title: 1, description: 1, deadline: 1 },
     )
-    response.status(200).json(_.pick(worker.toJSON(), 'workOrders'))
+    if (_.isNull(worker)) {
+      response.status(404).json({ error: 'invalid worker id' })
+    } else {
+      response.status(200).json(_.pick(worker.toJSON(), 'workOrders'))
+    }
   } catch (exception) {
     next(exception)
   }
