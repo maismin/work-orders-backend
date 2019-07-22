@@ -11,7 +11,10 @@
     "prettier": "prettier \"**/*.+(js|json|css)\"",
     "format": "npm run prettier -- --write"
   },
-  "author": "Si Mai",
+  "author": {
+    "name": "Si Mai",
+    "email": "maismin@gmail.com"
+  },
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
