@@ -1,6 +1,44 @@
 const workersRouter = require('express').Router()
 const Worker = require('../models/worker')
 const WorkOrder = require('../models/work-order')
+const _ = require('lodash')
+
+workersRouter.get('/', async (request, response, next) => {
+  try {
+    const workers = await Worker.find({}).populate('workOrders', {
+      title: 1,
+      description: 1,
+      deadline: 1,
+    })
+    response.status(200).json(workers.map(worker => worker.toJSON()))
+  } catch (exception) {
+    next(exception)
+  }
+})
+
+workersRouter.get('/:id', async (request, response, next) => {
+  try {
+    const worker = await Worker.findById(request.params.id).populate(
+      'workOrders',
+      { title: 1, description: 1, deadline: 1 },
+    )
+    response.status(200).json(worker.toJSON())
+  } catch (exception) {
+    next(exception)
+  }
+})
+
+workersRouter.get('/:id/work-orders', async (request, response, next) => {
+  try {
+    const worker = await Worker.findById(request.params.id).populate(
+      'workOrders',
+      { title: 1, description: 1, deadline: 1 },
+    )
+    response.status(200).json(_.pick(worker.toJSON(), 'workOrders'))
+  } catch (exception) {
+    next(exception)
+  }
+})
 
 workersRouter.post('/', async (request, response, next) => {
   try {

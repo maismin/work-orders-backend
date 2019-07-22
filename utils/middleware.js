@@ -20,7 +20,9 @@ const errorHandler = (error, request, response, next) => {
   if (error.name === 'ValidationError') {
     return response.status(400).json({ error: error.message })
   } else if (error.name === 'TypeError') {
-    return response.status(400).json({ error: 'invalid id' })
+    return response.status(400).json({ error: error.message })
+  } else if (error.name === 'MongoError') {
+    return response.status(400).json({ error: error.message })
   }
 
   next(error)

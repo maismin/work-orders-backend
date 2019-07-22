@@ -2,6 +2,35 @@ const workOrdersRouter = require('express').Router()
 const Worker = require('../models/worker')
 const WorkOrder = require('../models/work-order')
 
+workOrdersRouter.get('/', async (request, response, next) => {
+  try {
+    const sortQuery = {}
+    request.query.sort.split(',').forEach(queryStr => {
+      const queryStrSplit = queryStr.split('.')
+      sortQuery[queryStrSplit[0]] = queryStrSplit[1]
+    })
+
+    const workOrders = await WorkOrder.find({})
+      .populate('workers', { name: 1, companyName: 1, email: 1 })
+      .sort(sortQuery)
+    response.status(200).json(workOrders.map(workOrder => workOrder.toJSON()))
+  } catch (exception) {
+    next(exception)
+  }
+})
+
+workOrdersRouter.get('/:id', async (request, response, next) => {
+  try {
+    const workOrder = await WorkOrder.findById(request.params.id).populate(
+      'workers',
+      { name: 1, companyName: 1, email: 1 },
+    )
+    response.status(200).json(workOrder.toJSON())
+  } catch (exception) {
+    next(exception)
+  }
+})
+
 workOrdersRouter.post('/', async (request, response, next) => {
   try {
     const body = request.body

@@ -19,7 +19,7 @@ const workerSchema = mongoose.Schema({
   workOrders: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'WorkOrders',
+      ref: 'WorkOrder',
     },
   ],
 })
