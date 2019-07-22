@@ -127,7 +127,7 @@ describe('Deleting a worker', () => {
       )
     }
 
-    await api.delete(`/api/workers/${firedWorker.id}`)
+    await api.delete(`/api/workers/${firedWorker.id}`).expect(204)
 
     const leftOverWorkers = await helper.workersInDB()
     const leftOverWorkersEmails = leftOverWorkers.map(worker => worker.email)
