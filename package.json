@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "work-orders-backend",
   "version": "0.0.1",
   "description": "A backend api to create workers and assign work orders to them",
   "main": "index.js",

@@ -7,9 +7,9 @@ This backend application allows for the creation of workers and work-orders (tas
 
 1. Install [MongoDB Community Edition](https://docs.mongodb.com/manual/administration/install-community/)
 2. Install [Postman](https://www.getpostman.com/downloads/)
-3. Start up Mongo daemon (for MacOS)
+3. Start up Mongo daemon (for Linux)
 ```bash
-$ brew services start mongodb-community@4.0
+$ sudo service mongod start
 ```
 4. Unzip the project, `cd` to it, and run
 ```bash
@@ -20,6 +20,20 @@ $ npm install
 $ npm run watch
 ```
 6. Use Postman to interface with the API at (http://localhost:3003)
+
+## env Setup
+
+Create a `.env` file at the `project root` directory with the following
+
+```
+MONGODB_URI=mongodb://localhost:27017/hatchway-backend
+
+DEV_MONGODB_URI=mongodb://localhost:27017/hatchway-backend
+
+TEST_MONGODB_URI=mongodb://localhost:27017/hatchway-backend-test
+
+PORT=3003
+```
 
 ## Additional Commands
 
@@ -33,7 +47,7 @@ Run the following command for test coverage
 ```bash
 $ npm run test -- --coverage
 ```
-From the `root` directory, navigate to `/coverage/lcov-report/index.html` for the HTML report
+From the `project root` directory, navigate to `/coverage/lcov-report/index.html` for the HTML report
 
 ## API
 
